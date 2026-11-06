@@ -1,0 +1,76 @@
+{
+  "aps_citations": {
+    "required_columns": [
+      "citing_doi",
+      "cited_doi"
+    ],
+    "description": "APS directed citation edges (citing paper to cited paper)."
+  },
+  "aps_nodes": {
+    "required_columns": [
+      "id"
+    ],
+    "description": "One row per APS DOI in stable row order; plotting also requires degree, h, pagerank, D, 2stepD, CD, meta."
+  },
+  "blogs_edges": {
+    "required_columns": [],
+    "description": "Whitespace-separated directed edge list; first two columns are reversed to match the supplied network convention."
+  },
+  "email_edges": {
+    "required_columns": [],
+    "description": "Whitespace-separated directed edge list; first two columns are reversed to match the supplied network convention."
+  },
+  "wiki_edges": {
+    "required_columns": [],
+    "description": "Whitespace-separated directed edge list; first two columns are reversed to match the supplied network convention."
+  },
+  "blogs_metrics": {
+    "required_columns": [
+      "D",
+      "2stepD",
+      "CD",
+      "degree",
+      "h-index",
+      "pagerank"
+    ],
+    "description": "One row per integer graph vertex ID, including any unused ID rows."
+  },
+  "email_metrics": {
+    "required_columns": [
+      "D",
+      "2stepD",
+      "CD",
+      "degree",
+      "h-index",
+      "pagerank"
+    ],
+    "description": "One row per integer graph vertex ID, including any unused ID rows."
+  },
+  "wiki_metrics": {
+    "required_columns": [
+      "D",
+      "2stepD",
+      "CD",
+      "degree",
+      "h-index",
+      "pagerank"
+    ],
+    "description": "One row per integer graph vertex ID, including any unused ID rows."
+  },
+  "aps_overlap": {
+    "required_columns": [],
+    "description": "CSV with row labels and six overlap proportion columns in D, 2stepD, CD, degree, h, pagerank order."
+  },
+  "blogs_overlap": {
+    "required_columns": [],
+    "description": "CSV with row labels and six overlap proportion columns in D, 2stepD, CD, degree, h, pagerank order."
+  },
+  "email_overlap": {
+    "required_columns": [],
+    "description": "CSV with row labels and six overlap proportion columns in D, 2stepD, CD, degree, h, pagerank order."
+  },
+  "wiki_overlap": {
+    "required_columns": [],
+    "description": "CSV with row labels and six overlap proportion columns in D, 2stepD, CD, degree, h, pagerank order."
+  }
+}
