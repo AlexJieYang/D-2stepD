@@ -1,7 +1,40 @@
 """Directed disruption metrics and graph input adapters."""
 import igraph as ig
 import numpy as np
-from project_utils import input_path, load_table
+import pandas as pd
+from project_utils import input_path, load_table, configured_directory
+
+APS_METRICS_FILE = "aps_disruption_metrics.csv"
+APS_METRIC_COLUMNS = ["D", "2stepD", "CD", "degree"]
+
+
+def merge_aps_metrics(nodes, metrics):
+    """Attach calculated metrics by DOI while preserving node-table row order."""
+    required = ["id", *APS_METRIC_COLUMNS]
+    missing = sorted(set(required) - set(metrics.columns))
+    if missing:
+        raise ValueError(f"APS metrics is missing columns: {missing}")
+    for name, frame in [("APS nodes", nodes), ("APS metrics", metrics)]:
+        if frame["id"].isna().any() or frame["id"].duplicated().any():
+            raise ValueError(f"{name} must have unique, non-null DOI ids")
+    if set(nodes["id"]) != set(metrics["id"]):
+        raise ValueError("APS metrics and node tables must contain the same DOI ids")
+    metrics = metrics[required].copy()
+    metrics[APS_METRIC_COLUMNS] = metrics[APS_METRIC_COLUMNS].apply(pd.to_numeric, errors="raise")
+    if not np.isfinite(metrics[APS_METRIC_COLUMNS].to_numpy(dtype=float)).all():
+        raise ValueError("APS calculated metrics must be finite numeric values")
+    properties = nodes.drop(columns=APS_METRIC_COLUMNS, errors="ignore")
+    return properties.merge(metrics, on="id", how="left", sort=False, validate="one_to_one")
+
+
+def load_aps_plot_nodes():
+    """Read node properties and the calculated metric table for APS figures."""
+    path = configured_directory("output_dir", "outputs", "RESEARCH_OUTPUT_DIR") / APS_METRICS_FILE
+    if not path.is_file():
+        raise FileNotFoundError(
+            f"APS calculated metrics: {path}. Run calculate measures in APS Network.ipynb first."
+        )
+    return merge_aps_metrics(load_table("aps_nodes"), pd.read_csv(path, dtype={"id": str}))
 
 def aps_graph(edges, nodes):
     if nodes["id"].isna().any() or nodes["id"].duplicated().any():

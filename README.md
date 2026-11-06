@@ -22,6 +22,8 @@ Set `data_dir`, `output_dir` and `seed` in `config.json`, then open a notebook a
 
 Figures render in Jupyter. Explicit file exports use the configured output directory. Notebooks are stored with clear execution state.
 
+For APS figures, run `calculate measures in APS Network.ipynb` first. It writes `aps_disruption_metrics.csv` to `output_dir`. Then run `fig 3 by networkx.ipynb` or the APS section of `fig5 intentional attack.ipynb` with the same configuration. These notebooks join the calculated `D`, `2stepD`, `CD` and `degree` columns to the node properties by DOI `id`; `h`, `pagerank` and `meta` come from the node property table. DOI ids must be unique and match between the two tables.
+
 ## Notebooks
 
 - `calculate measures in APS Network.ipynb`

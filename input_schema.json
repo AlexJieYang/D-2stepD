@@ -10,7 +10,7 @@
     "required_columns": [
       "id"
     ],
-    "description": "One row per APS DOI in stable row order; plotting also requires degree, h, pagerank, D, 2stepD, CD, meta."
+    "description": "One row per APS DOI in stable row order; plotting also requires h, pagerank and meta. Figures join D, 2stepD, CD and degree from the calculated aps_disruption_metrics.csv in output_dir by id."
   },
   "blogs_edges": {
     "required_columns": [],
